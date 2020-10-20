@@ -51,7 +51,7 @@
             continuousWorld: false,
             worldCopyJump: false, 
             zoomControl:true, maxZoom:28, minZoom:1
-        }).fitBounds([[-7.594133377948882,-80.12523793590117],[-5.07583499452733,-77.27351519679982]]);
+        }).fitBounds([[-7.849017136431938,-79.880352061213],[-4.539277158467905,-77.31510388485641]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -654,6 +654,19 @@
         var baseMaps = {};
         L.control.layers(baseMaps,{'vias_mtc<br /><table><tr><td style="text-align: center;"><img src="legend/vias_mtc_2_12160.png" /></td><td>1216</td></tr><tr><td style="text-align: center;"><img src="legend/vias_mtc_2_14091.png" /></td><td>1409</td></tr><tr><td style="text-align: center;"><img src="legend/vias_mtc_2_CA12542.png" /></td><td>CA_-1254</td></tr><tr><td style="text-align: center;"><img src="legend/vias_mtc_2_CA14273.png" /></td><td>CA_1427</td></tr><tr><td style="text-align: center;"><img src="legend/vias_mtc_2_CA1066CA10704.png" /></td><td>CA-1066-CA1070</td></tr><tr><td style="text-align: center;"><img src="legend/vias_mtc_2_CA1192CA11835.png" /></td><td>CA-1192,_CA-1183</td></tr><tr><td style="text-align: center;"><img src="legend/vias_mtc_2_CA13066.png" /></td><td>CA-1306</td></tr><tr><td style="text-align: center;"><img src="legend/vias_mtc_2_CA13117.png" /></td><td>CA-1311</td></tr><tr><td style="text-align: center;"><img src="legend/vias_mtc_2_CA143714448.png" /></td><td>CA-1437_,_1444</td></tr><tr><td style="text-align: center;"><img src="legend/vias_mtc_2_CA15119.png" /></td><td>CA-1511</td></tr><tr><td style="text-align: center;"><img src="legend/vias_mtc_2_CA162416301487148314841486146410.png" /></td><td>CA-1624,_1630,_1487,_1483,_1484,_1486,_1464</td></tr><tr><td style="text-align: center;"><img src="legend/vias_mtc_2_CA166816551653165211.png" /></td><td>CA-1668,_1655,_1653,_1652</td></tr><tr><td style="text-align: center;"><img src="legend/vias_mtc_2_CA52112.png" /></td><td>CA-521</td></tr><tr><td style="text-align: center;"><img src="legend/vias_mtc_2_CA66613.png" /></td><td>CA-666</td></tr><tr><td style="text-align: center;"><img src="legend/vias_mtc_2_CA86214.png" /></td><td>CA-862</td></tr><tr><td style="text-align: center;"><img src="legend/vias_mtc_2_CA87815.png" /></td><td>CA-878</td></tr><tr><td style="text-align: center;"><img src="legend/vias_mtc_2_CA96196297998398816.png" /></td><td>CA-961,962,979,983,988</td></tr><tr><td style="text-align: center;"><img src="legend/vias_mtc_2_CA96617.png" /></td><td>CA-966</td></tr></table>': layer_vias_mtc_2,'<img src="legend/distritos_1.png" /> distritos': layer_distritos_1,"OSM Standard": layer_OSMStandard_0,}).addTo(map);
         setBounds();
+        var i = 0;
+        layer_distritos_1.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NOMB_DIST'] !== null?String('<div style="color: #000000; font-size: 6pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['NOMB_DIST']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_distritos_1'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
         var mapDiv = document.getElementById('map');
         var row = document.createElement('div');
         row.className="row";
@@ -760,6 +773,19 @@
             }
           this[lyr["options"]["layerName"]].clearLayers();
           this[lyr["options"]["layerName"]].addData(features);
+        var i = 0;
+        layer_distritos_1.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NOMB_DIST'] !== null?String('<div style="color: #000000; font-size: 6pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['NOMB_DIST']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_distritos_1'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
           }
           })
         }
